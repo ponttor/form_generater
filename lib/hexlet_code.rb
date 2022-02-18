@@ -6,14 +6,16 @@ module HexletCode
   class Error < StandardError; end
 
   class Tag
-    def self.build(name, content)
-      contents = []
-      content.each do |type, value|
-        contents.push(%(#{type}=\"#{value}\"))
+    def self.build(name, options = nil)
+      return %(<#{name}>) if options.nil?
+
+      contents = options.map do |type, value|
+        %(#{type}="#{value}")
       end
       %(<#{name} #{contents.join(' ')}>)
     end
   end
 end
 
-p HexletCode::Tag.build('br', a: 'b', c: 'd')
+# puts HexletCode::Tag.build('br', a: 'b', c: 'd')
+# puts HexletCode::Tag.build('br')
