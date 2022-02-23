@@ -7,10 +7,6 @@ class TestHexletCode < Minitest::Test
     refute_nil ::HexletCode::VERSION
   end
 
-  # def test_it_does_something_useful
-  #   assert false
-  # end
-
   def test_build_single_tag
     assert(HexletCode::Tag.build('br') == '<br>')
   end
