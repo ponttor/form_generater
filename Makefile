@@ -5,5 +5,9 @@ test:
 	bundle exec rake test
 
 lint:
-	bundle exec rake rubocop
+	bundle exec rubocop
 
+correct:
+	bundle exec rubocop -a
+
+.PHONY: test

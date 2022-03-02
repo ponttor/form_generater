@@ -21,8 +21,9 @@ module HexletCode
       tags_string = %( #{tag_contents.join(' ')})
  
       if single_tags.include?(name)
+        
         return %(<#{name}>) if tags_string == ' '
-        %(<#{name}#{tags_string}>)
+        return %(<#{name}#{tags_string}>)
       end
 
       return %(<#{name}>#{content}</#{name}>) if tags_string == ' '
