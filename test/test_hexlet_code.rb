@@ -4,6 +4,17 @@ require 'test_helper'
 require 'power_assert/colorize'
 
 class TestHexletCode < Minitest::Test
+
+  # User = Struct.new(:name, :job, keyword_init: true)
+
+  # def test_form_for
+  #   user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+  #   actual = HexletCode.form_for user do |f|
+  #   end 
+  #   expected = '<form action="#" method="post"></form>'
+  #   assert { actual == expected }
+  # end
+
   def test_that_it_has_a_version_number
     refute_nil ::HexletCode::VERSION
   end

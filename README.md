@@ -3,7 +3,7 @@
 
 # HexletCode
 
-A gem whick helps to create forms in website templates. It allows to reduce the form description code many times over due to automatic error handling and various controls.
+A gem which helps to create forms in website templates. It allows to reduce the form description code many times over due to automatic error handling and various controls.
 
 ## Installation
 
