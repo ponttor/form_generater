@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'power_assert'
 require 'power_assert/colorize'
 
 class TestHexletCode < Minitest::Test
