@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'power_assert'
+require 'minitest/power_assert'
 require 'power_assert/colorize'
 
 class TestHexletCode < Minitest::Test
@@ -10,7 +10,8 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_build_single_tag
-    assert { HexletCode::Tag.build('br') == '<br>' }
+    result = HexletCode::Tag.build('br')
+    assert { result == '<br>' }
   end
 
   def test_build_single_tag_with_content
