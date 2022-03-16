@@ -3,13 +3,6 @@
 module HexletCode
   class Tag
     def self.build(name, options = {})
-      # def stringify_tags(name, options = {})
-      #   contents = options.map do |type, value|
-      #     %(#{type}="#{value}")
-      #   end
-      #   %( #{contents.join(' ')})
-      # end
-
       single_tags = %w[br img input]
 
       tag_contents = options.map do |type, value|

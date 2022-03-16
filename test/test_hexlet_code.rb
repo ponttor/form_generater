@@ -34,13 +34,46 @@ class TestHexletCode < Minitest::Test
     assert { HexletCode::Tag.build('div') == '<div></div>' }
   end
 
-  # User = Struct.new(:name, :job, keyword_init: true)
+  User = Struct.new(:name, :job, keyword_init: true)
 
-  # def test_form_for
-  #   user = User.new name: 'rob', job: 'hexlet', gender: 'm'
-  #   actual = HexletCode.form_for user do |f|
-  #   end
-  #   expected = '<form action="#" method="post"></form>'
-  #   assert { actual == expected }
-  # end
+  def test_submit
+    user = User.new name: 'rob', job: 'hexlet'
+    actual = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job
+      f.submit
+    end
+    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><input name="job" type="text" value="hexlet"><input name="commit" type="submit" value="Save"></form>'
+    assert { actual == expected }
+  end
+
+  def test_form_for
+    user = User.new(name: 'rob', job: 'hexlet')
+    actual = HexletCode.form_for user do |f|
+    end
+    expected = '<form action="#" method="post"></form>'
+    assert { actual == expected }
+  end
+
+  def test_form_for_with_url
+    user = User.new(name: 'rob', job: 'hexlet')
+    actual = HexletCode.form_for user, url: '/users' do |f|
+    end
+    expected = '<form action="/users" method="post"></form>'
+    assert { actual == expected }
+  end
+
+  User = Struct.new(:name, :job, :gender, keyword_init: true)
+
+  def test_form_for_user_do
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+
+    actual = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job, as: :text
+    end
+
+    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea></form>'
+    assert { actual == expected }
+  end
 end
