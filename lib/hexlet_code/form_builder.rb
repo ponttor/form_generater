@@ -11,14 +11,18 @@ module HexletCode
     def input(param, as_param = {})
       @contents.push(Tag.build('label', { for: param.to_s }) { param.capitalize.to_s })
 
-      tag_rules = { :text => 'textarea' }
+      tag_rules = { :text => 'textarea', :input => 'input' }
+      options_rules = { :text => { cols: '20', rows: '40', name: param.to_s },
+                        :input => {name: param, type: "text", value: @user[param]} }
 
       if !as_param.empty?
         as = as_param.select {|key, value| key == :as}
-        tag_options = as_param.select {|key, value| key != :as}
-        tag_default = { cols: '20', rows: '40', name: param.to_s }
-        tag_options_all = tag_default.merge(tag_options)
+        options_given = as_param.select {|key, value| key != :as}
+
+        options_default = as.empty? ? options_rules[:input] : options_rules[as[:as]] 
         tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
+
+        tag_options_all = options_default.merge(options_given)
         @contents.push(Tag.build(tag_final, tag_options_all) do
           @user.job.to_s
         end)
