@@ -10,6 +10,6 @@ Metrics/MethodLength:
 Style/AsciiComments:
   Enabled: false
 Lint/EmptyBlock:
-  Enabled: false
+  Enabled: false  
 Layout/LineLength:
   Max: 260
