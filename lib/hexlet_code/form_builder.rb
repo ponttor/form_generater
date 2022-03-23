@@ -9,10 +9,11 @@ module HexletCode
     end
 
     def input(param, as_param = {})
+      param_value = @user.public_send(param)
       @contents.push(Tag.build('label', { for: param.to_s }) { param.capitalize.to_s })
 
       tag_rules = { text: 'textarea', input: 'input' }
-      options_rules = { text: { cols: '20', rows: '40', name: param.to_s }, input: { name: param, type: 'text', value: @user[param] } }
+      options_rules = { text: { cols: '20', rows: '40', name: param.to_s }, input: { name: param.to_s, type: 'text', value: param_value } }
 
       unless as_param.empty?
         as = as_param.select { |key, _value| key == :as }
@@ -26,7 +27,7 @@ module HexletCode
           @user.job.to_s
         end)
       end
-      @contents.push(Tag.build('input', { name: param, type: 'text', value: @user[param] })) if as_param.empty?
+      @contents.push(Tag.build('input', { name: param, type: 'text', value: param_value })) if as_param.empty?
     end
 
     def submit(param = 'save')

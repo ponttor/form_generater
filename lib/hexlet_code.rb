@@ -15,3 +15,17 @@ module HexletCode
     form_builder.final
   end
 end
+
+User = Struct.new(:name, :job, :gender, keyword_init: true)
+user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+
+result = HexletCode.form_for user do |f|
+  # Проверяет есть ли значение внутри name
+  # f.input :name
+  f.input :name
+  f.input :job, as: :text, rows: 50, cols: 50
+  # Проверяет есть ли значение внутри job
+  # f.input :job, as: :text
+end
+
+puts result
