@@ -13,21 +13,21 @@ module HexletCode
       @contents.push(Tag.build('label', { for: param.to_s }) { param.capitalize.to_s })
 
       tag_rules = { text: 'textarea', input: 'input' }
-      options_rules = { text: { cols: '20', rows: '40', name: param.to_s }, input: { name: param.to_s, type: 'text', value: param_value } }
+      options_rules = { text: { cols: '20', rows: '40', name: param.to_s },
+                        input: { name: param.to_s, type: 'text', value: param_value } }
 
-      unless as_param.empty?
-        as = as_param.select { |key, _value| key == :as }
-        options_given = as_param.except(:as)
+      return @contents.push(Tag.build('input', { name: param, type: 'text', value: param_value })) if as_param.empty?
 
-        options_default = as.empty? ? options_rules[:input] : options_rules[as[:as]]
-        tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
+      as = as_param.select { |key, _value| key == :as }
+      options_given = as_param.except(:as)
 
-        tag_options_all = options_default.merge(options_given)
-        @contents.push(Tag.build(tag_final, tag_options_all) do
-          @user.job.to_s
-        end)
-      end
-      @contents.push(Tag.build('input', { name: param, type: 'text', value: param_value })) if as_param.empty?
+      options_default = as.empty? ? options_rules[:input] : options_rules[as[:as]]
+      tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
+
+      tag_options_all = options_default.merge(options_given)
+      @contents.push(Tag.build(tag_final, tag_options_all) do
+        @user.job.to_s
+      end)
     end
 
     def submit(param = 'save')

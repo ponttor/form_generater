@@ -4,7 +4,7 @@ require 'test_helper'
 require 'minitest/power_assert'
 require 'power_assert/colorize'
 
-class TestHexletCode < Minitest::Test
+class TestHexletCode < TestCase
   def test_that_it_has_a_version_number
     refute_nil ::HexletCode::VERSION
   end
@@ -43,22 +43,20 @@ class TestHexletCode < Minitest::Test
       f.input :job
       f.submit
     end
-    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><input name="job" type="text" value="hexlet"><input name="commit" type="submit" value="Save"></form>'
+    expected = load_fixture('form_submit.html')
     assert { actual == expected }
   end
 
   def test_form_for
     user = User.new(name: 'rob', job: 'hexlet')
-    actual = HexletCode.form_for user do |f|
-    end
+    actual = HexletCode.form_for user
     expected = '<form action="#" method="post"></form>'
     assert { actual == expected }
   end
 
   def test_form_for_with_url
     user = User.new(name: 'rob', job: 'hexlet')
-    actual = HexletCode.form_for user, url: '/users' do |f|
-    end
+    actual = HexletCode.form_for user, url: '/users'
     expected = '<form action="/users" method="post"></form>'
     assert { actual == expected }
   end
@@ -73,7 +71,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text
     end
 
-    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea></form>'
+    expected = load_fixture('form.html')
     assert { actual == expected }
   end
 end
