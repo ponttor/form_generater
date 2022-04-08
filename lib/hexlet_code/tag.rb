@@ -2,26 +2,24 @@
 
 module HexletCode
   class Tag
-    def self.build(name, options = {})
-      single_tags = %w[br img input]
-
-      tag_contents = options.map do |type, value|
+    def self.create_attributes_string(options)
+      attributes = options.map do |type, value|
         %(#{type}="#{value}")
       end
 
+      options.empty? ? '' : %( #{attributes.join(' ')})
+    end
+
+    def self.build(name, options = {})
+      single_tags = %w[br img input]
+
       content = block_given? ? yield : ''
-      tags_string = %( #{tag_contents.join(' ')})
 
       if single_tags.include?(name)
-
-        return %(<#{name}>) if tags_string == ' '
-
-        return %(<#{name}#{tags_string}>)
+        %(<#{name}#{create_attributes_string(options)}>)
+      else
+        %(<#{name}#{create_attributes_string(options)}>#{content}</#{name}>)
       end
-
-      return %(<#{name}>#{content}</#{name}>) if tags_string == ' '
-
-      %(<#{name}#{tags_string}>#{content}</#{name}>)
     end
   end
 end

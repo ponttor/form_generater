@@ -2,41 +2,40 @@
 
 module HexletCode
   class FormBuilder
-    def initialize(user, options)
+    attr_reader :contents
+
+    def initialize(user)
       @user = user
-      @options = options
       @contents = []
     end
 
-    def input(param, as_param = {})
+    def input(param, options_given = {})
       param_value = @user.public_send(param)
-      @contents.push(Tag.build('label', { for: param.to_s }) { param.capitalize.to_s })
+      @contents.push(tag: 'label', option_content: { for: param.to_s }, param: param.capitalize.to_s)
 
       tag_rules = { text: 'textarea', input: 'input' }
       options_rules = { text: { cols: '20', rows: '40', name: param.to_s },
                         input: { name: param.to_s, type: 'text', value: param_value } }
 
-      return @contents.push(Tag.build('input', { name: param, type: 'text', value: param_value })) if as_param.empty?
+      if options_given.empty?
+        return @contents.push(tag: 'input', option_content: { name: param, type: 'text', value: param_value },
+                              param: '')
+      end
 
-      as = as_param.select { |key, _value| key == :as }
-      options_given = as_param.except(:as)
+      as = options_given.select { |key, _value| key == :as }
+      options_given = options_given.except(:as)
 
-      options_default = as.empty? ? options_rules[:input] : options_rules[as[:as]]
+      options_default = options_rules[as[:as]]
       tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
 
-      tag_options_all = options_default.merge(options_given)
-      @contents.push(Tag.build(tag_final, tag_options_all) do
-        @user.job.to_s
-      end)
+      tag_option = options_default.merge(options_given)
+
+      @contents.push(tag: tag_final, option_content: tag_option, param: @user[param].to_s)
     end
 
     def submit(param = 'save')
-      @contents.push(Tag.build('input', { name: 'commit', type: 'submit', value: param.capitalize.to_s }))
-      Tag.build('input', { name: 'commit', type: 'submit', value: param.capitalize.to_s })
-    end
-
-    def final
-      Tag.build('form', @options) { @contents.join }
+      @contents.push(tag: 'input', option_content: { name: 'commit', type: 'submit', value: param.capitalize.to_s },
+                     param: '')
     end
   end
 end

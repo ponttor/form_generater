@@ -16,3 +16,5 @@ gem 'power_assert'
 gem 'activesupport', '~> 5.0', '>= 5.0.0.1'
 
 gem 'minitest-power_assert'
+
+gem 'byebug', '~> 9.0', '>= 9.0.6'

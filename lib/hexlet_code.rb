@@ -1,31 +1,21 @@
 # frozen_string_literal: true
 
-require_relative 'hexlet_code/version'
-require_relative 'hexlet_code/tag'
 require_relative 'hexlet_code/form_builder'
+require_relative 'hexlet_code/form_render'
+require_relative 'hexlet_code/tag'
 
 module HexletCode
-  # autoload(:FormBuilder, 'hexlet_code/form_builder.rb')
+  autoload(:FormBuilder, 'hexlet_code/form_builder.rb')
+  autoload(:FormRender, 'hexlet_code/form_render.rb')
+  autoload(:Tag, 'hexlet_code/tag')
 
   def self.form_for(user, options = {})
     url = options[:url] || '#'
-    final_options = { action: url, method: 'post' }
-    form_builder = FormBuilder.new(user, final_options)
+    method = options[:method] || 'post'
+    final_options = { action: url, method: method }
+
+    form_builder = FormBuilder.new(user)
     yield form_builder if block_given?
-    form_builder.final
+    FormRender.build(form_builder.contents, final_options)
   end
 end
-
-User = Struct.new(:name, :job, :gender, keyword_init: true)
-user = User.new name: 'rob', job: 'hexlet', gender: 'm'
-
-result = HexletCode.form_for user do |f|
-  # Проверяет есть ли значение внутри name
-  # f.input :name
-  f.input :name
-  f.input :job, as: :text, rows: 50, cols: 50
-  # Проверяет есть ли значение внутри job
-  # f.input :job, as: :text
-end
-
-puts result
