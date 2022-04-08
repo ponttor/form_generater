@@ -14,20 +14,17 @@ module HexletCode
       @contents.push(tag: 'label', option_content: { for: param.to_s }, param: param.capitalize.to_s)
 
       tag_rules = { text: 'textarea', input: 'input' }
-      options_rules = { text: { cols: '20', rows: '40', name: param.to_s },
+      options_rules = { textarea: { cols: '20', rows: '40', name: param.to_s },
                         input: { name: param.to_s, type: 'text', value: param_value } }
-
-      if options_given.empty?
-        return @contents.push(tag: 'input', option_content: { name: param, type: 'text', value: param_value },
-                              param: '')
-      end
 
       as = options_given.select { |key, _value| key == :as }
       options_given = options_given.except(:as)
-
+                  
       tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
       options_default = options_rules[tag_final.to_sym] || {}
       tag_option = options_default.merge(options_given)
+
+      return @contents.push(tag: tag_final, option_content: tag_option, param: @user[param].to_s) if options_given.empty?
       @contents.push(tag: tag_final, option_content: tag_option, param: @user[param].to_s)
     end
 
