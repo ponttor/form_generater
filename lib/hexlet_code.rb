@@ -22,12 +22,12 @@ end
 
 
 User = Struct.new(:name, :job, :gender, keyword_init: true)
-user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+user = User.new name: 'rob', gender: 'm', job: 'hexlet'
 
 result = HexletCode.form_for user do |f|
-  # Проверяет есть ли значение внутри name
-  f.input :name
-  # Проверяет есть ли значение внутри job
-  f.input :job, as: :text
+  f.input :name, class: 'user-input'
+  f.input :job
+  f.submit
 end
 
+puts result
