@@ -20,7 +20,6 @@ module HexletCode
   end
 end
 
-
 User = Struct.new(:name, :job, :gender, keyword_init: true)
 user = User.new name: 'rob', gender: 'm', job: 'hexlet'
 
