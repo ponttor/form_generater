@@ -19,12 +19,16 @@ module HexletCode
 
       as = options_given.select { |key, _value| key == :as }
       options_given = options_given.except(:as)
-                  
+
       tag_final = as.empty? ? 'input' : tag_rules[as[:as]]
       options_default = options_rules[tag_final.to_sym] || {}
       tag_option = options_default.merge(options_given)
 
-      return @contents.push(tag: tag_final, option_content: tag_option, param: @user[param].to_s) if options_given.empty?
+      if options_given.empty?
+        return @contents.push(tag: tag_final, option_content: tag_option,
+                              param: @user[param].to_s)
+      end
+
       @contents.push(tag: tag_final, option_content: tag_option, param: @user[param].to_s)
     end
 
