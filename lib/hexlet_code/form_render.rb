@@ -1,34 +1,32 @@
 # frozen_string_literal: true
 
+require_relative 'tags/text'
+require_relative 'tags/input'
+require_relative 'tags/label'
+require_relative 'tags/submit'
+
 module HexletCode
+  # autoload(:Input, 'tags/input.rb')
+  # autoload(:Text, 'tags/input.rb')
+  # autoload(:Label, 'tags/input.rb')
+  # autoload(:Input, 'tags/input.rb')
+
   class FormRender
-    # attr_accessor :result
-    # state
     def self.build(form_builder, options)
       result = []
-      tag_rules = { default: 'input', text: 'textarea' }
 
-      form_builder.each do |el|
-        options_rules = { textarea: { cols: '20', rows: '40', name: el[:param].to_s },
-                          input: { name: el[:param].to_s, type: 'text', value: el[:block] } }
-
-        if el[:label_status]
-          label_tag = 'label'
-          label_options = { for: el[:param].to_s }
-          label_block = el[:param].capitalize.to_s
-          result.push(Tag.build(label_tag, label_options) { label_block })
+      form_builder.each do |element|
+        if element[:label_status]
+          content = Label.build element
+          result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
         end
+        p element[:tag]
+        content = Input.build element if element[:tag] == 'input' || (element[:tag].nil? && element[:submit].nil?)
+        content = Submit.build if element[:submit]
+        content = Text.build element if element[:tag] == :text
 
-        tag_final = tag_rules[el[:tag].to_sym]
-
-        options_default = options_rules[tag_final.to_sym] || {}
-
-        option_content_final = options_default.merge(el[:option_content])
-        block_final = el[:block]
-
-        result.push(Tag.build(tag_final, option_content_final) { block_final })
+        result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
       end
-      p @form_tag
       Tag.build('form', options) { result.join }
     end
   end
