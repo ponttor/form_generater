@@ -7,13 +7,15 @@ module HexletCode
     def initialize(entity)
       @entity = entity
       @contents = []
+      @default_tag = :string
+      @submit_tag = :submit
     end
 
     def input(param, options = {})
       param_value = @entity.public_send(param)
 
       tag_type = options.select { |key, _value| key == :as }
-      tag = tag_type[:as]
+      tag = tag_type[:as] || @default_tag
       options_final = options.except(:as) || {}
 
       result = { label_status: true, tag: tag, option_content: options_final, param: param, block: param_value }
@@ -21,7 +23,7 @@ module HexletCode
     end
 
     def submit
-      result = { submit: true }
+      result = { submit: true, tag: @submit_tag }
       @contents.push(result)
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Text
+  class TextInput
     def self.build(element)
       tag = 'textarea'
       options_default = { cols: '20', rows: '40', name: element[:param].to_s }

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Submit
-    def self.build
+  class SubmitInput
+    def self.build(_element)
       tag = 'input'
       options = { name: 'commit', type: 'submit', value: 'Save' }
       block = ''

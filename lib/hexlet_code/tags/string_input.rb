@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Input
+  class StringInput
     def self.build(element)
       tag = 'input'
       options_default = { name: element[:param].to_s, type: 'text', value: element[:block] }

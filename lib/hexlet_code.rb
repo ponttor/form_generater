@@ -20,14 +20,3 @@ module HexletCode
     FormRender.build(form_builder.contents, final_options)
   end
 end
-
-User = Struct.new(:name, :job, :gender, keyword_init: true)
-user = User.new name: 'rob', gender: 'm', job: 'hexlet'
-
-result = HexletCode.form_for user do |f|
-  f.input :name, class: 'user-input'
-  f.input :job, as: :text
-  f.submit
-end
-
-puts result

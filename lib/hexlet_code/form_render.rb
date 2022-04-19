@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'tags/text'
-require_relative 'tags/input'
+require_relative 'tags/text_input'
+require_relative 'tags/submit_input'
+require_relative 'tags/string_input'
 require_relative 'tags/label'
-require_relative 'tags/submit'
 
 module HexletCode
-  # autoload(:Input, 'tags/input.rb')
-  # autoload(:Text, 'tags/input.rb')
+  # autoload(:StringInput, 'tags/string_input')
+  # autoload(:TextInput, 'tags/text_input')
   # autoload(:Label, 'tags/input.rb')
-  # autoload(:Input, 'tags/input.rb')
+  # autoload(:SubmitInput, 'tags/submit_input')
 
   class FormRender
     def self.build(form_builder, options)
@@ -20,10 +20,10 @@ module HexletCode
           content = Label.build element
           result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
         end
-        p element[:tag]
-        content = Input.build element if element[:tag] == 'input' || (element[:tag].nil? && element[:submit].nil?)
-        content = Submit.build if element[:submit]
-        content = Text.build element if element[:tag] == :text
+
+        klass_name = "HexletCode::#{element[:tag].to_s.capitalize}Input"
+        klass = Object.const_get klass_name
+        content = klass.build element
 
         result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
       end
