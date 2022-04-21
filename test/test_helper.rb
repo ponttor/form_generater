@@ -2,7 +2,7 @@
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'hexlet_code'
-
+require 'minitest/power_assert'
 require 'minitest/autorun'
 
 class TestCase < MiniTest::Test

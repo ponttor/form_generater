@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'hexlet_code/form_builder'
-require_relative 'hexlet_code/form_render'
-require_relative 'hexlet_code/tag'
+# require_relative 'hexlet_code/form_builder'
+# require_relative 'hexlet_code/form_render'
+# require_relative 'hexlet_code/tag'
+# require_relative 'hexlet_code/tags'
 
 module HexletCode
   autoload(:FormBuilder, 'hexlet_code/form_builder.rb')
   autoload(:FormRender, 'hexlet_code/form_render.rb')
-  autoload(:Tag, 'hexlet_code/tag')
+  autoload(:Tag, 'hexlet_code/tag.rb')
+  autoload(:Tags, 'hexlet_code/tags.rb')
 
   def self.form_for(entity, options = {})
     url = options[:url] || '#'
