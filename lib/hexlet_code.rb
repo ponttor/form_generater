@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-# require_relative 'hexlet_code/form_builder'
-# require_relative 'hexlet_code/form_render'
-# require_relative 'hexlet_code/tag'
-# require_relative 'hexlet_code/tags'
-
 module HexletCode
   autoload(:FormBuilder, 'hexlet_code/form_builder.rb')
   autoload(:FormRender, 'hexlet_code/form_render.rb')
