@@ -3,11 +3,12 @@
 module HexletCode
   module Tags
     class SubmitInput
-      def self.build(element = '')
+      def self.build(element)
         tag = 'input'
-        options = { name: 'commit', type: 'submit', value: 'Save' }
-
-        { tag: tag, options: options, block: element }
+        value = element[:param] || 'Save'
+        options = { name: 'commit', type: 'submit', value: value }
+        block = ''
+        { tag: tag, options: options, block: block }
       end
     end
   end

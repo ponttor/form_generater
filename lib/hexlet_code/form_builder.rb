@@ -22,8 +22,8 @@ module HexletCode
       @contents.push(result)
     end
 
-    def submit
-      result = { submit: true, tag: @submit_tag }
+    def submit param = nil
+      result = { tag: @submit_tag, param: param }
       @contents.push(result)
     end
   end
