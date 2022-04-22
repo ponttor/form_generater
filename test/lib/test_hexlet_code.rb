@@ -13,7 +13,7 @@ class TestHexletCode < TestCase
     actual = HexletCode.form_for user do |f|
       f.input :name
       f.input :job
-      f.submit
+      f.submit 'Wow'
     end
     expected = load_fixture('form_submit.html')
     assert { actual == expected }
