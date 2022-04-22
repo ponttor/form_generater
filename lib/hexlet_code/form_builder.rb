@@ -9,7 +9,6 @@ module HexletCode
       @contents = []
       @default_tag = :string
       @submit_tag = :submit
-      @default_value = 'Save'
     end
 
     def input(param, options = {})
@@ -23,9 +22,8 @@ module HexletCode
       @contents.push(result)
     end
 
-    def submit(value = nill)
-      value_final = value || @default_value
-      result = { tag: @submit_tag, param: value_final }
+    def submit(value = 'Save')
+      result = { tag: @submit_tag, param: value }
       @contents.push(result)
     end
   end
