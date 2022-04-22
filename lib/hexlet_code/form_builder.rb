@@ -22,8 +22,9 @@ module HexletCode
       @contents.push(result)
     end
 
-    def submit param = nil
-      result = { tag: @submit_tag, param: param }
+    def submit(default_value = 'Save', param = {})
+      value = param.empty? ? default_value : param
+      result = { tag: @submit_tag, param: value }
       @contents.push(result)
     end
   end

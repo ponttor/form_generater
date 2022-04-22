@@ -5,7 +5,7 @@ module HexletCode
     class SubmitInput
       def self.build(element)
         tag = 'input'
-        value = element[:param] || 'Save'
+        value = element[:param]
         options = { name: 'commit', type: 'submit', value: value }
         block = ''
         { tag: tag, options: options, block: block }
