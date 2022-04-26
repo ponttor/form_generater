@@ -8,14 +8,14 @@ module HexletCode
       form_builder.each do |element|
         if element[:label_status]
           content = HexletCode::Tags::Label.build element
-          result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
+          result.push content
         end
 
         klass_name = "HexletCode::Tags::#{element[:tag].to_s.capitalize}Input"
         klass = Object.const_get klass_name
         content = klass.build element
 
-        result.push(Tag.build(content[:tag], content[:options]) { content[:block] })
+        result.push content
       end
       Tag.build('form', options) { result.join }
     end

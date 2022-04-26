@@ -4,12 +4,11 @@ module HexletCode
   module Tags
     class TextInput
       def self.build(element)
-        tag = 'textarea'
         options_default = { cols: '20', rows: '40', name: element[:param].to_s }
         options = options_default.merge(element[:option_content])
         block = element[:block]
 
-        { tag: tag, options: options, block: block }
+        Tag.build('textarea', options) { block }
       end
     end
   end
